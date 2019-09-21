@@ -9,28 +9,28 @@ import "./App.css";
 import React, { Component } from "react";
 
 import {
-  Row,
-  Header,
-  Container,
-  Hero,
-  Image,
-  Link,
-  GithubButton,
-  Column,
-  Navbar,
-  NavbarCollapse,
-  NavbarBrand,
-  NavbarNav,
-  NavbarLink,
-  Icon,
-  LanguageSwitcher,
-  Features,
-  Team,
-  BrowserSupport,
-  Gif,
-  Footer,
-  Copyright,
-  Social
+	Row,
+	Header,
+	Container,
+	Hero,
+	Image,
+	Link,
+	GithubButton,
+	Column,
+	Navbar,
+	NavbarCollapse,
+	NavbarBrand,
+	NavbarNav,
+	NavbarLink,
+	Icon,
+	LanguageSwitcher,
+	Features,
+	Team,
+	BrowserSupport,
+	Gif,
+	Footer,
+	Copyright,
+	Social
 } from "@front10/landing-page-book/dist/components";
 
 import particles from "./data/particles.json";
@@ -39,47 +39,57 @@ import team from "./data/team.json";
 import browsers from "./data/browsers.json";
 
 class App extends Component {
-  render() {
-    return (
-      <Container>
-        <Row className="mt-5">
-          <Column>
-            <Header borderBottom type="h3">
-              This an example of use landing page book in create react app
-            </Header>
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">1. Navbar</Header>
-            <Navbar expand="md">
-              <NavbarCollapse>
-                <NavbarBrand>
-                  <Image
-                    alt="Front10 logo"
-                    src="images/logo/front10.png"
-                    width="40"
-                  />
-                </NavbarBrand>
-                <NavbarNav alignItems="right">
-                  <NavbarLink>
-                    <Icon icon="fa fa-search" />
-                  </NavbarLink>
-                  <NavbarLink>
-                    <Icon icon="fa fa-github" />
-                  </NavbarLink>
-                  <NavbarLink>
-                    <Icon icon="fa fa-stack-overflow" />
-                  </NavbarLink>
-                  <LanguageSwitcher showArrow={false} />
-                </NavbarNav>
-              </NavbarCollapse>
-            </Navbar>
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">2. Hero</Header>
+	render() {
+
+	const rightItems = [
+		{
+			title: "Services"
+		},
+		{
+			title: "What we do"
+		},
+		{
+			title: "Process"
+		},
+		{
+			title: "Founders"
+		},
+		{
+			title: "Contact"
+		}
+	];
+
+	const onItemClick = ({ item }) => {
+	  //Put your code here
+	};
+	
+	return (
+		<div>
+		    <Navbar expand="md">
+		      <NavbarCollapse>
+		        <NavbarBrand>
+		          <Image
+		            alt="Front10 logo"
+		            src="images/logo/front10.png"
+		            width="40"
+		          />
+		        </NavbarBrand>
+		        <NavbarNav alignItems="right">
+		          <NavbarLink>
+		            <a href="/">Home</a>
+		          </NavbarLink>
+		          <NavbarLink>
+		            <a href="#features">Features</a>
+		          </NavbarLink>
+		          <NavbarLink>
+		            <a href="#team">Team</a>
+		          </NavbarLink>
+		          <NavbarLink>
+		            <a href="#download">Download</a>
+		          </NavbarLink>
+		        </NavbarNav>
+		      </NavbarCollapse>
+		    </Navbar>
             <Hero
               backgroundColor="#212529"
               particlesParams={particles}
@@ -93,9 +103,9 @@ class App extends Component {
                   src="images/logo/front10.png"
                   width="80"
                 />
-                <Header className="text-warning">Landing Page Book</Header>
+                <Header className="text-warning">PRAMbot</Header>
                 <Header className="text-warning" type="h5">
-                  React components to build!
+                  Psychological Recommendations for Anxiety and Mindfulness
                 </Header>
                 <div className="mt-5">
                   <Link
@@ -103,50 +113,31 @@ class App extends Component {
                     href="https://front10.com/landing-page-book"
                     target="_blank"
                   >
-                    Explore
+                    Learn More
                   </Link>
                   <GithubButton btnText="Stars" btnType="star" />
                 </div>
               </Container>
             </Hero>
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">3. Features</Header>
+            <div id="features">
             <Features
               features={features}
               imageCircle={false}
               showBorder={false}
               showSubtitle={true}
             />
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">4. Team</Header>
-            <Team
-              showBorder={false}
-              members={team}
-              socials={["linkedin", "twitter"]}
-            />
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">5. Gif</Header>
-            <Gif autoplay image="images/demo/themes.gif" />
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">6. Browsers support</Header>
+            </div>
+            <div id="team">
+	            <Team
+	              showBorder={false}
+	              members={team}
+	              socials={["linkedin", "twitter"]}
+	            />
+	        </div>
+            <div align="center" id="download">
             <BrowserSupport browsers={browsers} />
-          </Column>
-        </Row>
-        <Row className="mt-5">
-          <Column>
-            <Header type="h5">7. Footer</Header>
+            </div>
+	        
             <Footer>
               <Row>
                 <Column className="col-sm-12 col-md">
@@ -162,34 +153,11 @@ class App extends Component {
                     />
                   </Link>
                 </Column>
-                <Column className="col-sm-12 col-md mt-3 mt-md-0">
-                  <Social
-                    type="twitter"
-                    url="https://twitter.com/front10hello"
-                  />
-                  <Social
-                    type="linkedin"
-                    url="https://www.linkedin.com/company/front10/"
-                  />
-                </Column>
               </Row>
             </Footer>
-          </Column>
-        </Row>
-        <Row className="mt-5 mb-5">
-          <Column className="text-center">
-            <Link
-              className="btn btn-primary btn-started"
-              href="https://front10.com/landing-page-book"
-              target="_blank"
-            >
-              Explore more components...
-            </Link>
-          </Column>
-        </Row>
-      </Container>
-    );
-  }
+	      </div>
+	);
+	}
 }
 
 export default App;
