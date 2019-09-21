@@ -15,22 +15,17 @@ import {
 	Hero,
 	Image,
 	Link,
-	GithubButton,
 	Column,
 	Navbar,
 	NavbarCollapse,
 	NavbarBrand,
 	NavbarNav,
 	NavbarLink,
-	Icon,
-	LanguageSwitcher,
 	Features,
 	Team,
 	BrowserSupport,
-	Gif,
 	Footer,
 	Copyright,
-	Social
 } from "@front10/landing-page-book/dist/components";
 
 import particles from "./data/particles.json";
@@ -39,30 +34,7 @@ import team from "./data/team.json";
 import browsers from "./data/browsers.json";
 
 class App extends Component {
-	render() {
-
-	const rightItems = [
-		{
-			title: "Services"
-		},
-		{
-			title: "What we do"
-		},
-		{
-			title: "Process"
-		},
-		{
-			title: "Founders"
-		},
-		{
-			title: "Contact"
-		}
-	];
-
-	const onItemClick = ({ item }) => {
-	  //Put your code here
-	};
-	
+	render() {	
 	return (
 		<div>
 		    <Navbar expand="md">
@@ -115,7 +87,6 @@ class App extends Component {
                   >
                     Learn More
                   </Link>
-                  <GithubButton btnText="Stars" btnType="star" />
                 </div>
               </Container>
             </Hero>
@@ -135,7 +106,11 @@ class App extends Component {
 	            />
 	        </div>
             <div align="center" id="download">
-            <BrowserSupport browsers={browsers} />
+	            <Row>
+	            	<Column className="col-sm-12 col-md">
+	            		<BrowserSupport browsers={browsers} />
+	            	</Column>
+	            </Row>
             </div>
 	        
             <Footer>
