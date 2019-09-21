@@ -1,15 +1,7 @@
 [
   {
-    "vendor": "firefox",
-    "version": "> 56"
-  },
-  {
     "vendor": "chrome",
     "version": "= 62"
-  },
-  {
-    "vendor": "iexplore",
-    "version": "> 9"
   },
   {
     "vendor": "safari",
@@ -18,13 +10,5 @@
   {
     "vendor": "netscape",
     "version": "> 42.6"
-  },
-  {
-    "vendor": "opera",
-    "version": "< 15.6"
-  },
-  {
-    "vendor": "maxthon",
-    "version": ">= 10"
   }
 ]
