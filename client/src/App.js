@@ -34,7 +34,7 @@ import team from "./data/team.json";
 import browsers from "./data/browsers.json";
 
 class App extends Component {
-	render() {	
+	render() {
 	return (
 		<div>
 		    <Navbar expand="md">
