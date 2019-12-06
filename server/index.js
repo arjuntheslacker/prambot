@@ -32,30 +32,30 @@ app.post('/api/inspector', async (req, res) => {
 	res.json(output);
 });
 
-app.post('/api/insertDataMap', async (req, res) => {
-	const symptoms = req.body.symptoms.map(x => {
-		return {id: x, intensity: 5};
-	});
-	const symptom_string = stringGenerator(symptoms);
-	const treatments = req.body.treatments;
+// app.post('/api/insertDataMap', async (req, res) => {
+// 	const symptoms = req.body.symptoms.map(x => {
+// 		return {id: x, intensity: 5};
+// 	});
+// 	const symptom_string = stringGenerator(symptoms);
+// 	const treatments = req.body.treatments;
 	
-	const query_string = "INSERT into base_mapping \
-	(symptoms, symptom_string, treatments) \
-	values ($1, $2, $3)";
-	const values = [
-		JSON.stringify(symptoms), 
-		symptom_string, 
-		JSON.stringify(treatments)
-	];
+// 	const query_string = "INSERT into base_mapping \
+// 	(symptoms, symptom_string, treatments) \
+// 	values ($1, $2, $3)";
+// 	const values = [
+// 		JSON.stringify(symptoms), 
+// 		symptom_string, 
+// 		JSON.stringify(treatments)
+// 	];
 
-	const output = await query(query_string, values);
-	res.json(output);
-});
+// 	const output = await query(query_string, values);
+// 	res.json(output);
+// });
 
-app.post('/api/query', async (req, res) => {
-	const output = await query(req.body.query);
-	res.json(output);
-});
+// app.post('/api/query', async (req, res) => {
+// 	const output = await query(req.body.query);
+// 	res.json(output);
+// });
 
 app.post('/api/getRecommendation', async (req, res) => {
 	req.body.symptoms = req.body.symptoms.map(x => {
