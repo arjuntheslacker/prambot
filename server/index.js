@@ -2,6 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const path = require('path');
 const {query, end} = require('./db');
+const {
+	stringGenerator, 
+	validateRecommendationInput, 
+	validateSymptoms
+} = require('./util');
 
 const app = express();
 
@@ -10,36 +15,77 @@ app.use(express.static(path.join(process.cwd(), 'client/build')));
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-// An api endpoint that returns a short list of items
-app.get('/api/getList', (req,res) => {
-	const list = ["item1", "item2", "item3"];
-	res.json(list);
-});
-
-app.get('/api/sample', async (req, res) => {
-	const output = await query('SELECT NOW()');
-	res.json(output);
-});
-
 app.get('/api/getSymptoms', async (req, res) => {
-	const output = await query('SELECT * from symptoms');
+	const output = await query('SELECT id, name, details from symptoms where date_delete = 0 order by name');
 	res.json(output);
 });
 
 app.get('/api/getTreatmentList', async (req, res) => {
-	const output = await query('SELECT * from treatments');
+	const output = await query('SELECT name, details from treatments where date_delete = 0 order by name');
 	res.json(output);
 });
 
-app.post('/api/getTreatmentList', async (req, res) => {
-	// join feedback table to treatment table, sort by feedback.score
-	const user_id = req.body.user_id;
-	if (!user_id) {
+app.post('/api/inspector', async (req, res) => {
+	let output = req.body;
+	output.type = typeof(req.body.symptoms);
+	req.body.symptoms.forEach(x => console.log(x));
+	res.json(output);
+});
+
+// app.post('/api/insertDataMap', async (req, res) => {
+// 	const symptoms = req.body.symptoms.map(x => {
+// 		return {id: x, intensity: 5};
+// 	});
+// 	const symptom_string = stringGenerator(symptoms);
+// 	const treatments = req.body.treatments;
+	
+// 	const query_string = "INSERT into base_mapping \
+// 	(symptoms, symptom_string, treatments) \
+// 	values ($1, $2, $3)";
+// 	const values = [
+// 		JSON.stringify(symptoms), 
+// 		symptom_string, 
+// 		JSON.stringify(treatments)
+// 	];
+
+// 	const output = await query(query_string, values);
+// 	res.json(output);
+// });
+
+// app.post('/api/query', async (req, res) => {
+// 	const output = await query(req.body.query);
+// 	res.json(output);
+// });
+
+app.post('/api/getRecommendation', async (req, res) => {
+	req.body.symptoms = req.body.symptoms.map(x => {
+		return {id: x, intensity: 5};
+	});
+	if (!validateRecommendationInput(req.body)) {
 		res.status(500);
-		res.json({error: 'No user supplied'});
+		res.json({error: 'input did not pass validation'});
 		return;
 	}
-	const output = await query('select treatment.id, treatment.name, treatment.description from treatments INNER JOIN feedback on (treatment.id = feedback.treatment_id) where feedback.user_id = $1 order by feedback.score desc;', [user_id]);
+
+	const symptoms = req.body.symptoms;
+	const valid = await validateSymptoms(symptoms);
+	if (!valid) {
+		res.status(500);
+		res.json({error: 'invalid symptom in list'});
+		return;
+	}
+
+	const circumstance = req.body.circumstance;
+	// we're not doing intensities right now, but we want to save them in the db
+	const symptomString = stringGenerator(symptoms);
+
+	const query_string = "select treatments from base_mapping \
+						  where date_delete = 0 \
+						  order by levenshtein(symptom_string, \
+						  $1) ASC \
+						  limit 1";
+
+	const output = await query(query_string, [symptomString]);
 	res.json(output);
 });
 
