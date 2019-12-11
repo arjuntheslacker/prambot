@@ -21,7 +21,7 @@ app.get('/api/getSymptoms', async (req, res) => {
 });
 
 app.get('/api/getTreatmentList', async (req, res) => {
-	const output = await query('SELECT name, details from treatments where date_delete = 0 order by name');
+	const output = await query('SELECT id, name, details from treatments where date_delete = 0 order by name');
 	res.json(output);
 });
 
